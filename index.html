@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Top 10 Terror</title>
+
+<style>
+
+body{
+
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(black,#1a0000);
+color:white;
+transition: background 0.5s;
+}
+
+/* NUEVO: Efecto Modo Cine */
+body.modo-cine {
+    background: #050505 !important;
+}
+body.modo-cine .card {
+    box-shadow: 0 0 5px #550000;
+}
+
+header{
+
+text-align:center;
+padding:30px;
+background:black;
+box-shadow:0 0 20px red;
+
+}
+
+h1{
+
+color:red;
+
+}
+
+/* NUEVO: Barra de herramientas interactiva */
+.herramientas {
+    text-align: center;
+    padding: 15px;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #330000;
+}
+
+.btn-tool {
+    background: #222;
+    color: white;
+    border: 1px solid red;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-tool:hover {
+    background: red;
+    box-shadow: 0 0 10px red;
+}
+
+.container{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:20px;
+padding:20px;
+transition: all 0.5s;
+}
+
+/* NUEVO: Estilo alternativo de lista */
+.container.vista-lista {
+    grid-template-columns: 1fr !important;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.container.vista-lista .card {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+.container.vista-lista .card img {
+    width: 150px;
+    height: auto;
+}
+
+.card{
+
+background:#111;
+padding:15px;
+border-radius:10px;
+box-shadow:0 0 10px red;
+transition:.4s;
+position: relative;
+}
+
+/* NUEVO: Película marcada como vista */
+.card.visto {
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+.card:hover{
+
+transform:scale(1.03);
+
+}
+
+.card img{
+
+width:100%;
+border-radius:10px;
+
+}
+
+h2{
+
+color:red;
+
+}
+
+.btn{
+
+display:inline-block;
+margin-top:10px;
+padding:8px 12px;
+background:red;
+color:white;
+text-decoration:none;
+border-radius:5px;
+
+}
+
+footer{
+
+text-align:center;
+padding:15px;
+background:black;
+
+}
+
+/* NUEVO */
+
+.verMas{
+
+margin-top:12px;
+padding:10px;
+background:#8b0000;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:15px;
+
+}
+
+.verMas:hover{
+
+background:red;
+
+}
+
+.extra{
+
+display:none;
+margin-top:10px;
+background:#222;
+padding:10px;
+border-left:4px solid red;
+border-radius:5px;
+
+}
+
+.estrellas{
+
+margin-top:15px;
+font-size:28px;
+
+}
+
+.estrellas span{
+
+cursor:pointer;
+color:gray;
+transition:.2s;
+
+}
+
+.estrellas span:hover{
+
+color:gold;
+
+}
+
+.activa{
+
+color:gold !important;
+
+}
+
+/* NUEVO: Sub-secciones interactivas dentro de la tarjeta */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.btn-visto {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-visto:hover { background: #555; }
+
+.nota-usuario {
+    width: 100%;
+    margin-top: 10px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    resize: none;
+    font-size: 13px;
+}
+.nota-usuario:focus { border-color: red; outline: none; }
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>👻 Top 10 Películas de Terror</h1>
+
+<p>Ranking con explicación de cada película</p>
+
+</header>
+
+<div class="herramientas">
+    <button class="btn-tool" onclick="cambiarVista()">📋 Cambiar Vista (Cuadrícula/Lista)</button>
+    <button class="btn-tool" onclick="invertirOrden()">🔃 Invertir Orden (1-10 / 10-1)</button>
+    <button class="btn-tool" onclick="conmutarCine()">🎬 Modo Cine (Apagar Luces)</button>
+</div>
+
+<div class="container" id="contenedor-pelis">
+<div class="card" data-orden="1">
+
+<img src="https://vignette.wikia.nocookie.net/doblaje/images/c/c3/EmilyRose.jpg/revision/latest?cb=20171130202502&path-prefix=es">
+
+<h2>#1 Emily Rose</h2>
+
+<p>⭐⭐⭐⭐⭐ | 2005</p>
+
+<p>Basada en un caso real de posesión, mezcla terror psicológico con elementos legales.</p>
+
+<p><b>¿Por qué está en el top?</b> Por su realismo y tensión constante.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> Scott Derrickson</p>
+<p><b>⏱ Duración:</b> 119 minutos</p>
+<p><b>🎭 Género:</b> Terror sobrenatural</p>
+<p><b>💀 Curiosidad:</b> Inspirada en un caso real ocurrido en Alemania.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 1)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=emily+rose+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(1, this.value)" id="resena-1"></textarea>
+
+</div>
+
+<div class="card" data-orden="2">
+
+<img src="https://tse2.mm.bing.net/th/id/OIP.6_eGS8OjzRCpjtUH7yMk3QHaKt?rs=1&pid=ImgDetMain&o=7&rm=3">
+
+<h2>#2 Así en la Tierra como en el Infierno</h2>
+
+<p>⭐⭐⭐⭐☆ | 2014</p>
+
+<p>Terror claustrofóbico en catacumbas bajo París.</p>
+
+<p><b>¿Por qué está en el top?</b> Su ambiente inmersivo y tensión constante.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> John Erick Dowdle</p>
+<p><b>⏱ Duración:</b> 93 minutos</p>
+<p><b>🎭 Género:</b> Terror / Falso documental</p>
+<p><b>💀 Curiosidad:</b> Fue filmada dentro de las catacumbas reales de París.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 2)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=as+above+so+below+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(2, this.value)" id="resena-2"></textarea>
+
+</div>
+
+<div class="card" data-orden="3">
+
+<img src="https://pics.filmaffinity.com/the_conjuring_2_the_enfield_poltergeist-489921396-large.jpg">
+
+<h2>#3 El Conjuro 2</h2>
+
+<p>⭐⭐⭐⭐⭐ | 2016</p>
+
+<p>Basada en el caso Enfield, uno de los más famosos del paranormal.</p>
+
+<p><b>¿Por qué está en el top?</b> Historia real + terror moderno.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> James Wan</p>
+<p><b>⏱ Duración:</b> 134 minutos</p>
+<p><b>🎭 Género:</b> Terror paranormal</p>
+<p><b>💀 Curiosidad:</b> Basada en el famoso caso Enfield de Inglaterra.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 3)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=conjuring+2+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(3, this.value)" id="resena-3"></textarea>
+
+</div>
+
+<div class="card" data-orden="4">
+
+<img src="https://ociotime.com/wp-content/uploads/2022/10/El-abismo-del-infierno-768x438.jpg">
+
+<h2>#4 El Abismo del Infierno</h2>
+
+<p>⭐⭐⭐⭐☆ | 2021</p>
+
+<p>Terror en escenarios submarinos con sensación de encierro.</p>
+
+<p><b>¿Por qué está en el top?</b> Por su originalidad.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> Alexandre Bustillo</p>
+<p><b>⏱ Duración:</b> 85 minutos</p>
+<p><b>🎭 Género:</b> Terror acuático</p>
+<p><b>💀 Curiosidad:</b> La casa sumergida fue construida para la película.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 4)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=deep+house+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(4, this.value)" id="resena-4"></textarea>
+
+</div>
+
+<div class="card" data-orden="5">
+
+<img src="https://m.media-amazon.com/images/S/pv-target-images/0488736cba913ff4c66ad5aa7f1841a9a83b0a10cbd21f9204a64f5903265d9b.jpg">
+
+<h2>#5 La Monja</h2>
+
+<p>⭐⭐⭐⭐☆ | 2018</p>
+
+<p>El demonio Valak en un convento oscuro.</p>
+
+<p><b>¿Por qué está en el top?</b> Su estética y personaje icónico.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> Corin Hardy</p>
+<p><b>⏱ Duración:</b> 96 minutos</p>
+<p><b>🎭 Género:</b> Terror sobrenatural</p>
+<p><b>💀 Curiosidad:</b> Pertenece al universo de El Conjuro.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 5)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=the+nun+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(5, this.value)" id="resena-5"></textarea>
+
+</div>
+<div class="card" data-orden="6">
+
+<img src="https://tse2.mm.bing.net/th/id/OIP.EyAmuh1vkGSKzhLuz6XatgHaLQ?rs=1&pid=ImgDetMain&o=7&rm=3">
+
+<h2>#6 It</h2>
+
+<p>⭐⭐⭐⭐☆ | 2017</p>
+
+<p>Pennywise aterroriza a un grupo de niños.</p>
+
+<p><b>¿Por qué está en el top?</b> Terror psicológico + historia emocional.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> Andy Muschietti</p>
+<p><b>⏱ Duración:</b> 135 minutos</p>
+<p><b>🎭 Género:</b> Terror psicológico</p>
+<p><b>💀 Curiosidad:</b> Basada en la famosa novela de Stephen King.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 6)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=it+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(6, this.value)" id="resena-6"></textarea>
+
+</div>
+
+<div class="card" data-orden="7">
+
+<img src="https://external-preview.redd.it/halloween-1878-trailer-v0-A3hrRuvkQbEYgq0b-MWbQJs32yHgyYY7kdlVIlzlJSg.jpg?format=pjpg&auto=webp&s=f996e12c1b6b16d8698f65b5ccecddbb9fd79c98">
+
+<h2>#7 Halloween</h2>
+
+<p>⭐⭐⭐⭐☆ | 1978</p>
+
+<p>Clásico slasher con Michael Myers.</p>
+
+<p><b>¿Por qué está en el top?</b> Marcó el género del terror.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> John Carpenter</p>
+<p><b>⏱ Duración:</b> 91 minutos</p>
+<p><b>🎭 Género:</b> Slasher</p>
+<p><b>💀 Curiosidad:</b> Michael Myers es uno de los villanos más famosos del cine.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 7)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=halloween+1978+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(7, this.value)" id="resena-7"></textarea>
+
+</div>
+
+<div class="card" data-orden="8">
+
+<img src="https://tse1.mm.bing.net/th/id/OIP.noiig4iJvwLjTQMpglicMAHaK-?rs=1&pid=ImgDetMain&o=7&rm=3">
+
+<h2>#8 Annabelle</h2>
+
+<p>⭐⭐⭐⭐☆ | 2014</p>
+
+<p>La muñeca poseída más famosa del cine.</p>
+
+<p><b>¿Por qué está en el top?</b> Universo El Conjuro.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> John R. Leonetti</p>
+<p><b>⏱ Duración:</b> 99 minutos</p>
+<p><b>🎭 Género:</b> Terror sobrenatural</p>
+<p><b>💀 Curiosidad:</b> La verdadera Annabelle está en el museo de los Warren.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 8)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=annabelle+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(8, this.value)" id="resena-8"></textarea>
+
+</div>
+
+<div class="card" data-orden="9">
+
+<img src="https://www.cine.com/media/noticias/00_136.jpg">
+
+<h2>#9 Tarot</h2>
+
+<p>⭐⭐⭐☆☆ | 2024</p>
+
+<p>Un grupo de amigos desata una maldición con cartas del tarot.</p>
+
+<p><b>¿Por qué está en el top?</b> Concepto sobrenatural moderno.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> Spenser Cohen</p>
+<p><b>⏱ Duración:</b> 92 minutos</p>
+<p><b>🎭 Género:</b> Terror sobrenatural</p>
+<p><b>💀 Curiosidad:</b> Está basada en una novela de Nicholas Adams.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 9)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=tarot+movie+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(9, this.value)" id="resena-9"></textarea>
+
+</div>
+
+<div class="card" data-orden="10">
+
+<img src="https://wallpaperaccess.com/full/4788856.jpg">
+
+<h2>#10 Chucky</h2>
+
+<p>⭐⭐⭐☆☆ | 1988</p>
+
+<p>La muñeca asesina más icónica del terror.</p>
+
+<p><b>¿Por qué está en el top?</b> Ícono cultural del cine de terror.</p>
+
+<button class="verMas">📖 Ver más</button>
+
+<div class="extra">
+<p><b>🎬 Director:</b> Tom Holland</p>
+<p><b>⏱ Duración:</b> 87 minutos</p>
+<p><b>🎭 Género:</b> Slasher</p>
+<p><b>💀 Curiosidad:</b> Chucky tiene más de 30 años de historia en el cine.</p>
+</div>
+
+<div class="estrellas">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+
+<div class="card-actions">
+    <button class="btn-visto" onclick="marcarVisto(this, 10)">👁️ ¿Ya la viste?</button>
+    <a class="btn" target="_blank" href="https://www.youtube.com/results?search_query=childs+play+1988+trailer">Ver tráiler</a>
+</div>
+<textarea class="nota-usuario" placeholder="Escribe tu reseña personal aquí..." oninput="guardarResena(10, this.value)" id="resena-10"></textarea>
+
+</div>
+
+</div>
+
+<footer>
+<p>Proyecto completo 🎬</p>
+</footer>
+<script>
+
+//==============================
+// VER MÁS
+//==============================
+
+document.querySelectorAll(".verMas").forEach(function(boton){
+
+boton.addEventListener("click",function(){
+
+let caja=this.parentNode.querySelector(".extra");
+
+if(caja.style.display=="block"){
+
+caja.style.display="none";
+this.innerHTML="📖 Ver más";
+
+}else{
+
+caja.style.display="block";
+this.innerHTML="📕 Ver menos";
+
+}
+
+});
+
+});
+
+
+//==============================
+// ESTRELLAS
+//==============================
+
+document.querySelectorAll(".estrellas").forEach(function(grupo,numero){
+
+let estrellas=grupo.querySelectorAll("span");
+
+// Cargar puntuación guardada
+
+let nota=localStorage.getItem("peli"+numero);
+
+if(nota){
+
+for(let i=0;i<nota;i++){
+
+estrellas[i].classList.add("activa");
+
+}
+
+}
+
+// Evento click
+
+estrellas.forEach(function(estrella,posicion){
+
+estrella.addEventListener("click",function(){
+
+estrellas.forEach(function(e){
+
+e.classList.remove("activa");
+
+});
+
+for(let i=0;i<=posicion;i++){
+
+estrellas[i].classList.add("activa");
+
+}
+
+localStorage.setItem("peli"+numero,posicion+1);
+
+});
+
+});
+
+});
+
+//=====================================
+// NUEVAS FUNCIONES DE INTERACCIÓN
+//=====================================
+
+// 1. Alternar vistas (Grid / Lista)
+function cambiarVista() {
+    let contenedor = document.getElementById("contenedor-pelis");
+    contenedor.classList.toggle("vista-lista");
+}
+
+// 2. Invertir el orden de las tarjetas (1-10 o 10-1)
+let ordenInvertido = false;
+function invertirOrden() {
+    let contenedor = document.getElementById("contenedor-pelis");
+    let tarjetas = Array.from(contenedor.querySelectorAll(".card"));
+    
+    tarjetas.sort((a, b) => {
+        let ordenA = parseInt(a.getAttribute("data-orden"));
+        let ordenB = parseInt(b.getAttribute("data-orden"));
+        return ordenInvertido ? ordenA - ordenB : ordenB - ordenA;
+    });
+    
+    ordenInvertido = !ordenInvertido;
+    tarjetas.forEach(t => contenedor.appendChild(t));
+}
+
+// 3. Modo Cine (Apagar Luces)
+function conmutarCine() {
+    document.body.classList.toggle("modo-cine");
+}
+
+// 4. Marcar Película como Vista (Usa LocalStorage)
+function marcarVisto(boton, id) {
+    let tarjeta = boton.closest(".card");
+    tarjeta.classList.toggle("visto");
+    
+    let estado = tarjeta.classList.contains("visto") ? "si" : "no";
+    localStorage.setItem("visto_peli_" + id, estado);
+    
+    boton.innerText = estado === "si" ? "✅ ¡Ya la viste!" : "👁️ ¿Ya la viste?";
+}
+
+// 5. Guardar Reseñas del usuario
+function guardarResena(id, texto) {
+    localStorage.setItem("resena_peli_" + id, texto);
+}
+
+// Cargar datos guardados al iniciar la página
+document.addEventListener("DOMContentLoaded", function() {
+    for(let i = 1; i <= 10; i++) {
+        // Cargar Vistos
+        let vistoGuardado = localStorage.getItem("visto_peli_" + i);
+        if(vistoGuardado === "si") {
+            let tarjeta = document.querySelector(`[data-orden="${i}"]`);
+            if(tarjeta) {
+                tarjeta.classList.add("visto");
+                tarjeta.querySelector(".btn-visto").innerText = "✅ ¡Ya la viste!";
+            }
+        }
+        // Cargar Reseñas
+        let resenaGuardada = localStorage.getItem("resena_peli_" + i);
+        let cajaTexto = document.getElementById("resena-" + i);
+        if(resenaGuardada && cajaTexto) {
+            cajaTexto.value = resenaGuardada;
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
